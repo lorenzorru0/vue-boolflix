@@ -28,7 +28,8 @@ export default {
       axios.get('https://api.themoviedb.org/3/search/movie', {
         params: {
           api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
-          query: this.stringSearch
+          query: this.stringSearch,
+          language: 'it-IT'
         }
       })
       .then( (resp) => {
