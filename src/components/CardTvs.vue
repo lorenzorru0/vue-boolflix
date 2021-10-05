@@ -16,6 +16,7 @@
                     <i class="far fa-star" v-for="(icon, index) in 5" :key="'ligth' + index"></i>
                 </template>
             </li>
+            <li> <strong>Overview: </strong> {{tvs.overview}}</li>
         </ul>
     </div>
 </template>

@@ -33,6 +33,7 @@ export default {
 <style lang="scss" scoped>
 section {
     margin-top: 3.515625rem;
+    min-height: calc(100vh - 3.515625rem);
     background-color: rgb(20, 20, 20);
 
 
