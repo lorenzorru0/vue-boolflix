@@ -26,6 +26,10 @@ export default {
 <style lang="scss" scoped>
 header {
     background-color: rgb(20, 20, 20);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
     padding: 10px;
 
     img {

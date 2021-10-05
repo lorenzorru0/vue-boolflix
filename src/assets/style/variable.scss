@@ -1,0 +1,34 @@
+@mixin list {
+    list-style: none;
+    padding-left: 0;
+    position: absolute;
+    top: 0;
+    color: #fff;
+    padding: 1.25rem .9375rem;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+@mixin card {
+    div {
+        position: relative;
+        margin-bottom: 1.25rem;
+        overflow-y: auto;
+
+        img {
+            width: 100%;
+            transition: all 1s;
+        }
+        
+        ul {
+            @include list;
+
+            img {
+                width: 2rem;
+            }
+
+            i {
+                color: gold;
+            }
+        }
+    }
+}
