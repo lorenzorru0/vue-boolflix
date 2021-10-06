@@ -2,22 +2,22 @@
     <section>
         <div class="container">
             <div class="row">
-                <h2 v-if="filmsArray.length != 0">Movies:</h2>
+                <h2 v-if="moviesArray.length != 0">Movies:</h2>
                 <!-- <h2 v-else>There's no match on movies</h2> -->
-                <CardFilm class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="film in filmsArray" :key="film.id" :film="film"/>
+                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="movie in moviesArray" :key="movie.id" :info="movie" :whatIs="film"/>
             </div>
             <div class="row">
                 <h2 v-if="tvsArray.length != 0">Tv series:</h2>
                 <!-- <h2 v-else>There's no match on tv series</h2> -->
-                <CardTvs class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="tvs in tvsArray" :key="tvs.id" :tvs="tvs"/>
+                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="tvs in tvsArray" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
             </div>
             <div class="row">
                 <h2 v-if="popularMovies.length != 0">Popular movies:</h2>
-                <CardFilm class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="movie in popularMovies" :key="movie.id" :film="movie"/>
+                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="movie in popularMovies" :key="movie.id" :info="movie" :whatIs="film"/>
             </div>
             <div class="row">
                 <h2 v-if="popularTvs.length != 0">Popular Tv Series:</h2>
-                <CardTvs class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="tvs in popularTvs" :key="tvs.id" :tvs="tvs"/>
+                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="tvs in popularTvs" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
             </div>
         </div>
     </section>
@@ -25,14 +25,12 @@
 
 <script>
 import axios from 'axios';
-import CardFilm from './CardFilm.vue'; 
-import CardTvs from './CardTvs.vue'; 
+import Card from './Card.vue'; 
 
 export default {
     name: 'CardContainer',
     components: {
-        CardFilm,
-        CardTvs
+        Card
     },
     props: {
         stringSearch: String
@@ -41,17 +39,16 @@ export default {
         return {
             popularMovies: [],
             popularTvs: [],
-            filmsArray: [],
-            tvsArray: []
+            moviesArray: [],
+            tvsArray: [],
+            tvS: 'tvs',
+            film: 'film'
         }
     },
     watch: {
-        stringSearch: {
-            handler: function() {
+        stringSearch: function() {
                 this.getMoviesTvs();
             }
-        }
-
     },
     methods: {
         getMoviesTvs() {
@@ -63,7 +60,7 @@ export default {
                 }
             })
             .then( (resp) => {
-                this.filmsArray = resp.data.results;
+                this.moviesArray = resp.data.results;
             });
 
             axios.get('https://api.themoviedb.org/3/search/tv', {
