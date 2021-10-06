@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @mouseleave="addInfoBool = false">
         <img v-if="info.poster_path != null" :src="'https://image.tmdb.org/t/p/w342' + info.poster_path" alt="Film poster">
         <ul :class="info.poster_path == null ? 'opacity1ul' : null ">
             <li v-if="whatIs == 'film'"> <strong>Title:</strong> {{info.title}}</li>
@@ -17,15 +17,18 @@
                     <i class="far fa-star" v-for="(icon, index) in 5" :key="'ligth' + index"></i>
                 </template>
             </li>
-            <!-- <li> <strong>Overview: </strong> {{info.overview}}</li>
-            <template v-if="actors.length != 0">
-                <li> <strong>Popular actors: </strong></li>
-                <li v-for="actor in actors" :key="actor.id"> <strong>-</strong> {{actor}}</li>
+            <li><strong>Click the i for more info</strong> <i class="fas fa-info-circle" @click="addInfo()"></i> </li>
+            <template v-if="addInfoBool">
+                <li> <strong>Overview: </strong> {{info.overview}}</li>
+                <template v-if="actors.length != 0">
+                    <li> <strong>Popular actors: </strong></li>
+                    <li v-for="actor in actors" :key="actor.id"> <strong>-</strong> {{actor}}</li>
+                </template>
+                <template v-if="genres.length != 0">
+                    <li> <strong>Genres: </strong></li>
+                    <li v-for="genre in genres" :key="genre.id"> <strong>-</strong> {{genre}}</li>
+                </template>
             </template>
-            <template v-if="genres.length != 0">
-                <li> <strong>Genres: </strong></li>
-                <li v-for="genre in genres" :key="genre.id"> <strong>-</strong> {{genre}}</li>
-            </template> -->
         </ul>
     </div>
 </template>
@@ -42,7 +45,13 @@ export default {
     data() {
         return {
             actors: [],
-            genres: []
+            genres: [],
+            addInfoBool: false
+        }
+    },
+    methods: {
+        addInfo() {
+            this.addInfoBool = !this.addInfoBool;
         }
     },
     created() {
@@ -123,6 +132,17 @@ div {
 
             i {
                 color: gold;
+            }
+
+            .fa-info-circle {
+                margin: {
+                    top: .3125rem;
+                    bottom: .3125rem;
+                    left: .3125rem;
+                };
+                color: #fff;
+                font-size: 2rem;
+                vertical-align: middle;
             }
         }
     }
