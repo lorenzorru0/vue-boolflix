@@ -1,6 +1,6 @@
 <template>
     <header>
-        <div class="container d-flex align-items-center justify-content-between">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
             <div>
                 <img src="../assets/img/netflix.png" alt="Logo netflix">
             </div>

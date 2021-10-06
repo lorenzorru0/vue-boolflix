@@ -183,6 +183,7 @@ export default {
 <style lang="scss" scoped>
 section {
     margin-top: 3.515625rem;
+    padding-bottom: 3.125rem;
     background-color: rgb(20, 20, 20);
 
     select {
