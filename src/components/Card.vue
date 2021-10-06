@@ -92,60 +92,61 @@ export default {
 @import '../assets/style/variable.scss';
 
 div {
-        position: relative;
-        margin-bottom: 1.25rem;
-        overflow-y: auto;
+    position: relative;
+    margin-bottom: 1.25rem;
+    overflow-y: auto;
 
-        &:hover > img {
-            opacity: 0;
-        }
-        &:hover > ul {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        img {
-            width: 100%;
-            opacity: 1;
-            transition: opacity 0.5s;
-        }
-
-        .opacity1ul {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        ul {
-            list-style: none;
-            padding-left: 0;
-            position: absolute;
-            top: 0;
-            color: #fff;
-            padding: 1.25rem .9375rem;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s, opacity 0.5s linear;
-
-            img {
-                width: 2rem;
-            }
-
-            i {
-                color: gold;
-            }
-
-            .fa-info-circle {
-                margin: {
-                    top: .3125rem;
-                    bottom: .3125rem;
-                    left: .3125rem;
-                };
-                color: #fff;
-                font-size: 2rem;
-                vertical-align: middle;
-            }
-        }
+    &:hover > img {
+        opacity: 0;
+        transition-delay:0.5s;
+    }
+    &:hover > ul {
+        visibility: visible;
+        opacity: 1;
+        transition-delay:0.3s;
     }
 
+    img {
+        width: 100%;
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
 
+    .opacity1ul {
+        visibility: visible;
+        opacity: 1;
+    }
+        
+    ul {
+        list-style: none;
+        padding-left: 0;
+        position: absolute;
+        top: 0;
+        color: #fff;
+        padding: 1.25rem .9375rem;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s linear;
+
+        img {
+            width: 2rem;
+        }
+
+        i {
+            color: gold;
+        }
+
+        .fa-info-circle {
+            margin: {
+                top: .3125rem;
+                bottom: .3125rem;
+                left: .3125rem;
+            };
+            color: #fff;
+            font-size: 2rem;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+    }
+}
 </style>
