@@ -1,7 +1,7 @@
 <template>
-    <div @mouseover="hovered = true" @mouseleave="hovered = false">
-        <img :src="'https://image.tmdb.org/t/p/w342' + info.poster_path" alt="Film poster" :class="hovered == true ? 'opacity0' : 'opacity1'">
-        <ul :class="hovered == true ? 'opacity1ul' : 'opacity0ul'">
+    <div>
+        <img v-if="info.poster_path != null" :src="'https://image.tmdb.org/t/p/w342' + info.poster_path" alt="Film poster">
+        <ul :class="info.poster_path == null ? 'opacity1ul' : null ">
             <li v-if="whatIs == 'film'"> <strong>Title:</strong> {{info.title}}</li>
             <li v-else> <strong>Name:</strong> {{info.name}}</li>
             <li v-if="whatIs == 'film'"> <strong>Original title:</strong> {{info.original_title}}</li>
@@ -17,12 +17,22 @@
                     <i class="far fa-star" v-for="(icon, index) in 5" :key="'ligth' + index"></i>
                 </template>
             </li>
-            <li> <strong>Overview: </strong> {{info.overview}}</li>
+            <!-- <li> <strong>Overview: </strong> {{info.overview}}</li>
+            <template v-if="actors.length != 0">
+                <li> <strong>Popular actors: </strong></li>
+                <li v-for="actor in actors" :key="actor.id"> <strong>-</strong> {{actor}}</li>
+            </template>
+            <template v-if="genres.length != 0">
+                <li> <strong>Genres: </strong></li>
+                <li v-for="genre in genres" :key="genre.id"> <strong>-</strong> {{genre}}</li>
+            </template> -->
         </ul>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'CardFilm',
     props: {
@@ -31,8 +41,40 @@ export default {
     },
     data() {
         return {
-            hovered: false
+            actors: [],
+            genres: []
         }
+    },
+    created() {
+        axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}/credits` , {
+                params: {
+                    api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
+                    language: 'it-IT'
+                }
+            })
+            .then( (resp) => {
+                for (let i = 0; i < 5; i++) {
+                    this.actors.push(resp.data.cast[i].original_name);
+                }
+            })
+            .catch( () => {
+                console.log("No actors have been added yet!" );
+            });
+        
+        axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}` , {
+                params: {
+                    api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
+                    language: 'it-IT'
+                }
+            })
+            .then( (resp) => {
+                for (let i = 0; i < resp.data.genres.length; i++) {
+                    this.genres.push(resp.data.genres[i].name);
+                }
+            })
+            .catch( () => {
+                console.log('No genres have been added yet!!');
+            });
     }
 }
 </script>
@@ -40,5 +82,50 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/style/variable.scss';
 
-@include card;
+div {
+        position: relative;
+        margin-bottom: 1.25rem;
+        overflow-y: auto;
+
+        &:hover > img {
+            opacity: 0;
+        }
+        &:hover > ul {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        img {
+            width: 100%;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        .opacity1ul {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+            position: absolute;
+            top: 0;
+            color: #fff;
+            padding: 1.25rem .9375rem;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
+
+            img {
+                width: 2rem;
+            }
+
+            i {
+                color: gold;
+            }
+        }
+    }
+
+
 </style>

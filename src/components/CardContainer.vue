@@ -3,12 +3,12 @@
         <div class="container">
             <div class="row">
                 <h2 v-if="moviesArray.length != 0">Movies:</h2>
-                <!-- <h2 v-else>There's no match on movies</h2> -->
+                <h2 v-else-if="search">There's no match on movies</h2>
                 <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="movie in moviesArray" :key="movie.id" :info="movie" :whatIs="film"/>
             </div>
             <div class="row">
                 <h2 v-if="tvsArray.length != 0">Tv series:</h2>
-                <!-- <h2 v-else>There's no match on tv series</h2> -->
+                <h2 v-else-if="search">There's no match on tv series</h2>
                 <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="tvs in tvsArray" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
             </div>
             <div class="row">
@@ -42,12 +42,14 @@ export default {
             moviesArray: [],
             tvsArray: [],
             tvS: 'tvs',
-            film: 'film'
+            film: 'film',
+            search: false
         }
     },
     watch: {
         stringSearch: function() {
                 this.getMoviesTvs();
+                this.search = true;
             }
     },
     methods: {
@@ -84,7 +86,7 @@ export default {
         })
         .then( (resp) => {
             for (let i = 0; i < 8; i++) {
-            this.popularMovies.push(resp.data.results[i]);
+                this.popularMovies.push(resp.data.results[i]);
             }
         });
         axios.get('https://api.themoviedb.org/3/tv/popular?page=1', {
@@ -95,7 +97,7 @@ export default {
         })
         .then( (resp) => {
             for (let i = 0; i < 8; i++) {
-            this.popularTvs.push(resp.data.results[i]);
+                this.popularTvs.push(resp.data.results[i]);
             }
         });
     }
