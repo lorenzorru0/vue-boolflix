@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="container-fluid">
+        <div class="container-xxl ">
             <div id="moviesDivSearched" class="row">
                 <div v-if="tvsArray.length != 0" class="d-flex justify-content-between align-items-center">
                     <h2 v-if="moviesArray.length != 0">Movies:</h2>

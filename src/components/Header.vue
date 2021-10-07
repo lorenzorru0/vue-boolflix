@@ -2,7 +2,7 @@
     <header>
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-                <img src="../assets/img/netflix.png" alt="Logo netflix">
+                <img src="../assets/img/boolflix.png" alt="Logo netflix">
                 <nav>
                     <ul class="d-flex">
                         <li><a href="#moviesDiv">Pupular Movies</a></li>
@@ -48,7 +48,7 @@ header {
     box-shadow: 0 .25rem .9375rem -0.125rem #333;
 
     img {
-        width: 6.25rem;
+        width: 12.5rem;
     }
 
     nav {
