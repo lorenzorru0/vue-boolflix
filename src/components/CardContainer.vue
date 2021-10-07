@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
                 <Card class="col" v-for="movie in moviesFiltered" :key="movie.id" :info="movie" :whatIs="film"/>
                 <h2 v-show="moviesFiltered.length == 0 && moviesArray.length != 0">There's no match on this genre</h2>
             </div>
@@ -31,20 +31,20 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
                 <Card class="col" v-for="tvs in tvsFiltered" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
                 <h2 v-show="tvsFiltered.length == 0 && tvsArray.length != 0">There's no match on this genre</h2>
             </div>
             <div id="moviesDiv" class="row">
                 <h2 v-if="popularMovies.length != 0">Popular movies:</h2>
             </div>
-            <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+            <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
                 <Card class="col" v-for="movie in popularMovies" :key="movie.id" :info="movie" :whatIs="film"/>
             </div>
             <div id="tvsDiv" class="row">
                 <h2 v-if="popularTvs.length != 0">Popular Tv Series:</h2>
             </div>
-            <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+            <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
                 <Card class="col" v-for="tvs in popularTvs" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
             </div>
         </div>
@@ -78,7 +78,8 @@ export default {
             moviesGenreSelected: '',
             tvsGenreSelected: '',
             whatIs: '',
-            api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4'
+            api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
+            video: ''
         }
     },
     watch: {
@@ -114,6 +115,9 @@ export default {
             .then( (resp) => {
                 this.tvsArray = resp.data.results;
             });
+        },
+        playTrailer(video) {
+            this.video = video;
         }
     },
     computed: {

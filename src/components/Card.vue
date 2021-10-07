@@ -15,6 +15,9 @@
                     <i class="far fa-star" v-for="(icon, index) in 5" :key="'ligth' + index"></i>
                 </template>
             </li>
+            <li v-if="videoId != ''">
+                <div @click="playVideo()" >TRAILER</div>
+            </li>
             <li v-if="info.overview != '' || actors.length != 0 || genres.length != 0"><strong>Click the i for more info</strong> <i class="fas fa-info-circle" @click="addInfo()"></i> </li>
             <template v-if="addInfoBool">
                 <li v-if="info.overview != ''"> <strong>Overview: </strong> {{info.overview}}</li>
@@ -33,6 +36,7 @@
 
 <script>
 import axios from 'axios';
+import video from '../observable/video';
 
 export default {
     name: 'CardFilm',
@@ -44,13 +48,18 @@ export default {
         return {
             actors: [],
             genres: [],
-            video: '',
-            addInfoBool: false
+            videoId: '',
+            addInfoBool: false,
+            video
         }
     },
     methods: {
         addInfo() {
             this.addInfoBool = !this.addInfoBool;
+        },
+        playVideo() {
+            video.video = this.videoId;
+            video.view = true;
         }
     },
     created() {
@@ -65,9 +74,6 @@ export default {
                     this.actors.push(resp.data.cast[i].original_name);
                 }
             })
-            .catch( () => {
-                console.log("No actors have been added yet!" );
-            });
         
         axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}` , {
                 params: {
@@ -80,9 +86,6 @@ export default {
                     this.genres.push(resp.data.genres[i].name);
                 }
             })
-            .catch( () => {
-                console.log('No genres have been added yet!!');
-            });
 
         if ( this.whatIs == 'film') {
             axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}/videos` , {
@@ -92,26 +95,8 @@ export default {
                 }
             })
             .then( (resp) => {
-                console.log(resp);
-                this.video = resp.data.results[0].key;
+                this.videoId = resp.data.results[0].key;
             })
-            .catch( () => {
-                console.log("No video have been added yet!" );
-            });
-        } else {
-            axios.get(`https://api.themoviedb.org/3/tv/${this.info.id}/videos` , {
-                params: {
-                    api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
-                    language: 'it-IT'
-                }
-            })
-            .then( (resp) => {
-                console.log(resp);
-                this.video = resp.data.results[0].key;
-            })
-            .catch( () => {
-                console.log("No video have been added yet!" );
-            });
         }
     }
 }
@@ -174,6 +159,16 @@ div {
             color: #fff;
             font-size: 2rem;
             vertical-align: middle;
+            cursor: pointer;
+        }
+
+        div {
+            display: inline-block;
+            margin: .3125rem auto;
+            text-decoration: none;
+            color: #fff;
+            padding: .3125rem;
+            border: .0625rem solid #fff;
             cursor: pointer;
         }
     }
