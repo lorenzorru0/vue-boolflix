@@ -1,12 +1,25 @@
 <template>
     <header>
         <div class="container-fluid d-flex align-items-center justify-content-between">
-            <div>
+            <div class="d-flex align-items-center">
                 <img src="../assets/img/netflix.png" alt="Logo netflix">
+                <nav>
+                    <ul class="d-flex">
+                        <li><a href="#moviesDiv">Pupular Movies</a></li>
+                        <li><a href="#tvsDiv">Popular Tv Series</a></li>
+                        <template v-if="stringSearch != ''">
+                            <li><a href="#moviesDivSearched">Movies searched</a></li>
+                            <li><a href="#tvsDivSearched">Tv Series searched</a></li>
+                        </template> 
+                    </ul>
+                </nav>
             </div>
             <div>
-                <input type="text" name="search" id="search" v-model="stringSearch" placeholder="Search movies and Tv series">
-                <button @click="$emit('stringSearch', stringSearch)">SEARCH</button>
+                <form>
+                    <input type="text" name="search" id="search" v-model="stringSearch" placeholder="Search movies and Tv series">
+                    <button @click.prevent="$emit('stringSearch', stringSearch)">SEARCH</button>
+                    <button @click.prevent="stringSearch = '', $emit('stringSearch', stringSearch)">RESET</button>
+                </form>
             </div>
         </div>
     </header>
@@ -17,7 +30,8 @@ export default {
     name: 'Header',
     data() {
         return {
-            stringSearch: ''
+            stringSearch: '',
+            stringReset: 'reset'
         }
     }
 }
@@ -37,9 +51,34 @@ header {
         width: 6.25rem;
     }
 
+    nav {
+
+
+        ul {
+            list-style: none;
+            margin-bottom: 0;
+            padding-left: .625rem;
+
+            li {
+                
+                a {
+                    padding: .625rem;
+                    text-decoration: none;
+                    color: #fff;
+                    transition: box-shadow 0.5s;
+
+                    &:hover {
+                        box-shadow: 0 0 .25rem #fff;
+                    }
+                }
+
+                
+            }
+        }
+    }
+
     input, 
     button {
-        margin-right: 1.25rem;
         padding: .3125rem .625rem;
         border: none;
         border: .0625rem solid #fff;
@@ -48,11 +87,11 @@ header {
     }
 
     input {
-        width: 18.75rem;
+        max-width: 18.75rem;
     }
 
     button {
-        margin-right: 0;
+        margin-left: 1.25rem;
         transition: transform 1s;
     }
 

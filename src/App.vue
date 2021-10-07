@@ -1,7 +1,7 @@
 <template>
   <div id="app" >
-    <Header @stringSearch="getStringSearch" />
-    <CardContainer :stringSearch="stringSearch" />
+    <Header @stringSearch="getStringSearch" @resetSearch="resetSearch" />
+    <CardContainer :stringSearch="stringSearch" :resetString="resetString" />
   </div>
 </template>
 
@@ -17,18 +17,23 @@ export default {
   },
   data() {
     return {
-      stringSearch: ''
+      stringSearch: '',
+      resetString: ''
     }
   },
   methods: {
     getStringSearch(stringSearch) {
       this.stringSearch = stringSearch;
+    },
+    resetSearch(reset) {
+      this.resetString = reset;
     }
   }
 }
 </script>
 
 <style lang="scss">
+@import '~@fortawesome/fontawesome-free/css/all.css';
 @import './assets/style/common.scss';
 
 #app {

@@ -98,12 +98,12 @@ div {
 
     &:hover > img {
         opacity: 0;
-        transition-delay:0.5s;
+        transition-delay:0.7s;
     }
     &:hover > ul {
         visibility: visible;
         opacity: 1;
-        transition-delay:0.3s;
+        transition-delay:0.7s;
     }
 
     img {
