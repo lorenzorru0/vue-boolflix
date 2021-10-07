@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="container">
+        <div class="container-fluid">
             <div id="moviesDivSearched" class="row">
                 <div v-if="tvsArray.length != 0" class="d-flex justify-content-between align-items-center">
                     <h2 v-if="moviesArray.length != 0">Movies:</h2>
@@ -13,7 +13,9 @@
                         </select>
                     </div>
                 </div>
-                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="movie in moviesFiltered" :key="movie.id" :info="movie" :whatIs="film"/>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+                <Card class="col" v-for="movie in moviesFiltered" :key="movie.id" :info="movie" :whatIs="film"/>
                 <h2 v-show="moviesFiltered.length == 0 && moviesArray.length != 0">There's no match on this genre</h2>
             </div>
             <div id="tvsDivSearched" class="row">
@@ -28,16 +30,22 @@
                         </select>
                     </div>
                 </div>
-                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="tvs in tvsFiltered" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+                <Card class="col" v-for="tvs in tvsFiltered" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
                 <h2 v-show="tvsFiltered.length == 0 && tvsArray.length != 0">There's no match on this genre</h2>
             </div>
             <div id="moviesDiv" class="row">
                 <h2 v-if="popularMovies.length != 0">Popular movies:</h2>
-                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="movie in popularMovies" :key="movie.id" :info="movie" :whatIs="film"/>
+            </div>
+            <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+                <Card class="col" v-for="movie in popularMovies" :key="movie.id" :info="movie" :whatIs="film"/>
             </div>
             <div id="tvsDiv" class="row">
                 <h2 v-if="popularTvs.length != 0">Popular Tv Series:</h2>
-                <Card class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="tvs in popularTvs" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
+            </div>
+            <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+                <Card class="col" v-for="tvs in popularTvs" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
             </div>
         </div>
     </section>
@@ -69,6 +77,7 @@ export default {
             search: false,
             moviesGenreSelected: '',
             tvsGenreSelected: '',
+            whatIs: '',
             api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4'
         }
     },
@@ -145,9 +154,7 @@ export default {
                 }
             })
             .then( (resp) => {
-                for (let i = 0; i < 8; i++) {
-                    this.popularMovies.push(resp.data.results[i]);
-                }
+                this.popularMovies = resp.data.results;
             });
 
         axios.get('https://api.themoviedb.org/3/tv/popular?page=1', {
@@ -157,9 +164,7 @@ export default {
                 }
             })
             .then( (resp) => {
-                for (let i = 0; i < 8; i++) {
-                    this.popularTvs.push(resp.data.results[i]);
-                }
+                this.popularTvs = resp.data.results;
             });
 
         axios.get('https://api.themoviedb.org/3/genre/movie/list', {

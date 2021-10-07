@@ -2,10 +2,8 @@
     <div @mouseleave="addInfoBool = false">
         <img v-if="info.poster_path != null" :src="'https://image.tmdb.org/t/p/w342' + info.poster_path" alt="Film poster">
         <ul :class="info.poster_path == null ? 'opacity1ul' : null ">
-            <li v-if="whatIs == 'film'"> <strong>Title:</strong> {{info.title}}</li>
-            <li v-else> <strong>Name:</strong> {{info.name}}</li>
-            <li v-if="whatIs == 'film'"> <strong>Original title:</strong> {{info.original_title}}</li>
-            <li v-else> <strong>Original name:</strong> {{info.original_name}}</li>
+            <li> <strong>Title:</strong> {{info.title || info.name}}</li>
+            <li> <strong>Original title:</strong> {{info.original_title || info.original_name}}</li>
             <li> <strong>Original language: </strong> <img :src="'https://www.unknown.nu/flags/images/' + info.original_language + '-100'" alt="Language img"></li>
             <li>
                 <strong>Vote: </strong> 
@@ -17,9 +15,9 @@
                     <i class="far fa-star" v-for="(icon, index) in 5" :key="'ligth' + index"></i>
                 </template>
             </li>
-            <li><strong>Click the i for more info</strong> <i class="fas fa-info-circle" @click="addInfo()"></i> </li>
+            <li v-if="info.overview != '' || actors.length != 0 || genres.length != 0"><strong>Click the i for more info</strong> <i class="fas fa-info-circle" @click="addInfo()"></i> </li>
             <template v-if="addInfoBool">
-                <li> <strong>Overview: </strong> {{info.overview}}</li>
+                <li v-if="info.overview != ''"> <strong>Overview: </strong> {{info.overview}}</li>
                 <template v-if="actors.length != 0">
                     <li> <strong>Popular actors: </strong></li>
                     <li v-for="actor in actors" :key="actor.id"> <strong>-</strong> {{actor}}</li>
@@ -46,6 +44,7 @@ export default {
         return {
             actors: [],
             genres: [],
+            video: '',
             addInfoBool: false
         }
     },
@@ -84,6 +83,36 @@ export default {
             .catch( () => {
                 console.log('No genres have been added yet!!');
             });
+
+        if ( this.whatIs == 'film') {
+            axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}/videos` , {
+                params: {
+                    api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
+                    language: 'it-IT'
+                }
+            })
+            .then( (resp) => {
+                console.log(resp);
+                this.video = resp.data.results[0].key;
+            })
+            .catch( () => {
+                console.log("No video have been added yet!" );
+            });
+        } else {
+            axios.get(`https://api.themoviedb.org/3/tv/${this.info.id}/videos` , {
+                params: {
+                    api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
+                    language: 'it-IT'
+                }
+            })
+            .then( (resp) => {
+                console.log(resp);
+                this.video = resp.data.results[0].key;
+            })
+            .catch( () => {
+                console.log("No video have been added yet!" );
+            });
+        }
     }
 }
 </script>
@@ -98,12 +127,12 @@ div {
 
     &:hover > img {
         opacity: 0;
-        transition-delay:0.7s;
+        transition-delay:0.3s;
     }
     &:hover > ul {
         visibility: visible;
         opacity: 1;
-        transition-delay:0.7s;
+        transition-delay:0.3s;
     }
 
     img {
