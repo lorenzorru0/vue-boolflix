@@ -7,13 +7,8 @@
             <li> <strong>Original language: </strong> <img :src="'https://www.unknown.nu/flags/images/' + info.original_language + '-100'" alt="Language img"></li>
             <li>
                 <strong>Vote: </strong> 
-                <template v-if="info.vote_average != 0">
-                    <i class="fas fa-star" v-for="(icon, index) in parseInt(info.vote_average / 2)" :key="index"></i>
-                    <i class="far fa-star" v-for="(icon, index) in parseInt(6 - info.vote_average / 2)" :key="'ligth' + index"></i>
-                </template>
-                <template v-else>
-                    <i class="far fa-star" v-for="(icon, index) in 5" :key="'ligth' + index"></i>
-                </template>
+                <i class="fas fa-star" v-for="(icon, index) in Math.ceil(info.vote_average / 2)" :key="index"></i>
+                <i class="far fa-star" v-for="(icon, index) in Math.ceil(5 - Math.ceil(info.vote_average / 2))" :key="'ligth' + index"></i>
             </li>
             <li v-if="videoId != ''">
                 <div @click="playVideo()" >TRAILER</div>
