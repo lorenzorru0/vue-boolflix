@@ -47,7 +47,7 @@ header {
     top: 0;
     width: 100%;
     z-index: 9;
-    padding: .625rem;
+    padding: .625rem 0;
     box-shadow: 0 .25rem .9375rem -0.125rem #333;
 
     img {
