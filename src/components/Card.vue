@@ -72,7 +72,7 @@ export default {
                 for (let i = 0; i < 5; i++) {
                     this.actors.push(resp.data.cast[i].original_name);
                 }
-            })
+            }).catch(console.clear)
         
         // Axios request for the genres 
         axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}` , {
@@ -85,7 +85,7 @@ export default {
                 for (let i = 0; i < resp.data.genres.length; i++) {
                     this.genres.push(resp.data.genres[i].name);
                 }
-            })
+            }).catch(console.clear)
 
         // Axios request for the videos 
         if ( this.whatIs == 'film') {
@@ -97,7 +97,7 @@ export default {
             })
             .then( (resp) => {
                 this.videoId = resp.data.results[0].key;
-            })
+            }).catch(console.clear)
         }
     }
 }
