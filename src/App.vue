@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+    <!-- Header  -->
     <Header @stringSearch="getStringSearch" @resetSearch="resetSearch" />
+    <!-- Trailer popUp  -->
     <div v-if="video.view" class="popUp" v-scroll-lock="true">
       <div class="popUpBackground"></div>
       <div class="videoContainer">
@@ -10,6 +12,7 @@
         <iframe :src="`https://www.youtube.com/embed/${videoId}`" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
+    <!-- Card container  -->
     <CardContainer :stringSearch="stringSearch" :resetString="resetString" />
   </div>
 </template>

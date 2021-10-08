@@ -4,9 +4,6 @@
 /* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
-/* Import variable */
-@import './variable.scss';
-
 /* Reset */
 * {
     box-sizing: border-box;
@@ -15,14 +12,6 @@
 }
 
 /* Common */
-.opacity0ul {
-    visibility: hidden;
-    opacity: 0;
-}
-.opacity1ul {
-    visibility: visible;
-    opacity: 1;
-}
 h2 {
     margin: {
         top: 3.125rem;

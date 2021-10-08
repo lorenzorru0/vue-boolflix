@@ -3,11 +3,12 @@
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img src="../assets/img/boolflix.png" alt="Logo netflix">
+                <!-- Header nav part -->
                 <nav>
                     <ul class="d-flex">
                         <li><a href="#moviesDiv">Pupular Movies</a></li>
                         <li><a href="#tvsDiv">Popular Tv Series</a></li>
-                        <template v-if="stringSearch != ''">
+                        <template v-if="clickSearch != ''">
                             <li><a href="#moviesDivSearched">Movies searched</a></li>
                             <li><a href="#tvsDivSearched">Tv Series searched</a></li>
                         </template> 
@@ -15,9 +16,10 @@
                 </nav>
             </div>
             <div>
+                <!-- Header search part -->
                 <form>
                     <input type="text" name="search" id="search" v-model="stringSearch" placeholder="Search movies and Tv series">
-                    <button @click.prevent="$emit('stringSearch', stringSearch)">SEARCH</button>
+                    <button @click.prevent="clickSearch = 'click', $emit('stringSearch', stringSearch)">SEARCH</button>
                     <button @click.prevent="stringSearch = '', $emit('stringSearch', stringSearch)">RESET</button>
                 </form>
             </div>
@@ -31,7 +33,8 @@ export default {
     data() {
         return {
             stringSearch: '',
-            stringReset: 'reset'
+            stringReset: 'reset',
+            clickSearch: ''
         }
     }
 }

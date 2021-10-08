@@ -1,6 +1,8 @@
 <template>
     <div @mouseleave="addInfoBool = false">
+        <!-- Print the poster path -->
         <img v-if="info.poster_path != null" :src="'https://image.tmdb.org/t/p/w342' + info.poster_path" alt="Film poster">
+        <!-- Print the normal info -->
         <ul :class="info.poster_path == null ? 'opacity1ul' : null ">
             <li> <strong>Title:</strong> {{info.title || info.name}}</li>
             <li> <strong>Original title:</strong> {{info.original_title || info.original_name}}</li>
@@ -13,6 +15,7 @@
             <li v-if="videoId != ''">
                 <div @click="playVideo()" >TRAILER</div>
             </li>
+            <!-- Print more specific info -->
             <li v-if="info.overview != '' || actors.length != 0 || genres.length != 0"><strong>Click the i for more info</strong> <i class="fas fa-info-circle" @click="addInfo()"></i> </li>
             <template v-if="addInfoBool">
                 <li v-if="info.overview != ''"> <strong>Overview: </strong> {{info.overview}}</li>
@@ -58,6 +61,7 @@ export default {
         }
     },
     created() {
+        // Axios request for the actors
         axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}/credits` , {
                 params: {
                     api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
@@ -70,6 +74,7 @@ export default {
                 }
             })
         
+        // Axios request for the genres 
         axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}` , {
                 params: {
                     api_key: 'ed7970cf990eb8d2f2cdf5a51640ead4',
@@ -82,6 +87,7 @@ export default {
                 }
             })
 
+        // Axios request for the videos 
         if ( this.whatIs == 'film') {
             axios.get(`https://api.themoviedb.org/3/movie/${this.info.id}/videos` , {
                 params: {
@@ -98,8 +104,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/style/variable.scss';
-
 div {
     position: relative;
     margin-bottom: 1.25rem;

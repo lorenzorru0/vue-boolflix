@@ -1,6 +1,7 @@
 <template>
     <section>
         <div class="container-xxl ">
+            <!-- Print searched movies -->
             <div id="moviesDivSearched" class="row">
                 <div v-if="tvsArray.length != 0" class="d-flex justify-content-between align-items-center">
                     <h2 v-if="moviesArray.length != 0">Movies:</h2>
@@ -18,6 +19,7 @@
                 <Card class="col" v-for="movie in moviesFiltered" :key="movie.id" :info="movie" :whatIs="film"/>
                 <h2 v-show="moviesFiltered.length == 0 && moviesArray.length != 0">There's no match on this genre</h2>
             </div>
+            <!-- Print searched Tv Series -->
             <div id="tvsDivSearched" class="row">
                 <div v-if="tvsArray.length != 0" class="d-flex justify-content-between align-items-center">
                     <h2 v-if="tvsArray.length != 0">Tv series:</h2>
@@ -35,12 +37,14 @@
                 <Card class="col" v-for="tvs in tvsFiltered" :key="tvs.id" :info="tvs" :whatIs="tvS"/>
                 <h2 v-show="tvsFiltered.length == 0 && tvsArray.length != 0">There's no match on this genre</h2>
             </div>
+            <!-- Print popular movies -->
             <div id="moviesDiv" class="row">
                 <h2 v-if="popularMovies.length != 0">Popular movies:</h2>
             </div>
             <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
                 <Card class="col" v-for="movie in popularMovies" :key="movie.id" :info="movie" :whatIs="film"/>
             </div>
+            <!-- Print polpular Tv Series -->
             <div id="tvsDiv" class="row">
                 <h2 v-if="popularTvs.length != 0">Popular Tv Series:</h2>
             </div>
@@ -94,6 +98,7 @@ export default {
                 this.moviesArray = [];
                 this.tvsArray = [];
             }
+            // Axios request for searched movies
             axios.get('https://api.themoviedb.org/3/search/movie', {
                 params: {
                     api_key: this.api_key,
@@ -105,6 +110,7 @@ export default {
                 this.moviesArray = resp.data.results;
             });
 
+            // Axios request for searched Tv Series 
             axios.get('https://api.themoviedb.org/3/search/tv', {
                 params: {
                     api_key: this.api_key,
@@ -121,6 +127,7 @@ export default {
         }
     },
     computed: {
+        // Function for filter the searched movies 
         moviesFiltered() {
             let arrayFiltered;
             if (this.moviesGenreSelected == "") {
@@ -135,6 +142,7 @@ export default {
             }
             return arrayFiltered;
         },
+        // Function for filter the searched Tv Series 
         tvsFiltered() {
             let arrayFiltered;
             if (this.tvsGenreSelected == "") {
@@ -151,6 +159,7 @@ export default {
         }
     },
     created() {
+        // Axios request for Popular Movies 
         axios.get('https://api.themoviedb.org/3/movie/popular?page=1', {
                 params: {
                 api_key: this.api_key,
@@ -161,6 +170,7 @@ export default {
                 this.popularMovies = resp.data.results;
             });
 
+        // Axios request for Popular Tv Series 
         axios.get('https://api.themoviedb.org/3/tv/popular?page=1', {
                 params: {
                     api_key: this.api_key,
@@ -171,6 +181,7 @@ export default {
                 this.popularTvs = resp.data.results;
             });
 
+        // Axios request for movies genres 
         axios.get('https://api.themoviedb.org/3/genre/movie/list', {
                 params: {
                     api_key: this.api_key,
@@ -181,6 +192,7 @@ export default {
                 this.moviesGenres = resp.data.genres;
             });
 
+        // Axios request for Tv series genres 
         axios.get('https://api.themoviedb.org/3/genre/tv/list', {
                 params: {
                     api_key: this.api_key,
