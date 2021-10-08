@@ -20,7 +20,7 @@
                 <form>
                     <input type="text" name="search" id="search" v-model="stringSearch" placeholder="Search movies and Tv series">
                     <button @click.prevent="clickSearch = 'click', $emit('stringSearch', stringSearch)">SEARCH</button>
-                    <button @click.prevent="stringSearch = '', $emit('stringSearch', stringSearch)">RESET</button>
+                    <button @click.prevent="clickSearch = '', stringSearch = '', $emit('stringSearch', stringSearch)">RESET</button>
                 </form>
             </div>
         </div>
